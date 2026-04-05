@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Helio Predict</title>
+
+<style>
+
+body{
+margin:0;
+overflow:hidden;
+height:100vh;
+font-family:"Comic Sans MS";
+
+background:linear-gradient(#87CEEB,#FFF7AE,#87CEEB);
+background-size:400% 400%;
+animation:sky 15s infinite alternate;
+
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+@keyframes sky{
+0%{background-position:0% 50%;}
+100%{background-position:100% 50%;}
+}
+
+/* SUN */
+
+.sun{
+position:absolute;
+top:40px;
+right:80px;
+font-size:160px;
+}
+
+/* CLOUDS */
+
+.cloud{
+position:absolute;
+font-size:120px;
+}
+
+.cloudmove{
+animation:cloudmove 40s linear infinite;
+}
+
+.cloud1{ top:120px; left:-200px;}
+.cloud2{ top:250px; left:-400px; animation-duration:55s;}
+
+.cloud3{ top:80px; left:300px;}
+.cloud4{ top:200px; left:900px;}
+
+@keyframes cloudmove{
+from{transform:translateX(0);}
+to{transform:translateX(1800px);}
+}
+
+/* REALISTIC FLYING BIRDS */
+
+.bird{
+position:absolute;
+width:30px;
+height:15px;
+border-top:3px solid black;
+border-radius:50%;
+animation:birdFly 25s linear infinite;
+}
+
+.bird::after{
+content:"";
+position:absolute;
+width:30px;
+height:15px;
+left:12px;
+top:-3px;
+border-top:3px solid black;
+border-radius:50%;
+}
+
+.bird1{top:120px; left:-100px;}
+.bird2{top:180px; left:-300px; animation-duration:30s;}
+.bird3{top:220px; left:-500px; animation-duration:35s;}
+
+@keyframes birdFly{
+from{transform:translateX(0);}
+to{transform:translateX(2000px);}
+}
+
+/* WIND TURBINES */
+
+.turbine{
+position:absolute;
+bottom:200px;
+width:8px;
+height:120px;
+background:#777;
+}
+
+.turbine::before{
+content:"";
+position:absolute;
+top:-40px;
+left:-40px;
+width:80px;
+height:80px;
+border-radius:50%;
+border:3px solid #999;
+animation:spin 4s linear infinite;
+}
+
+.turbine::after{
+content:"";
+position:absolute;
+top:-40px;
+left:-2px;
+width:4px;
+height:40px;
+background:white;
+box-shadow:
+0 0 0 white,
+30px 30px 0 white,
+-30px 30px 0 white;
+}
+
+.turbine1{left:600px;}
+.turbine2{left:720px;}
+.turbine3{left:820px;}
+
+@keyframes spin{
+from{transform:rotate(0deg);}
+to{transform:rotate(360deg);}
+}
+
+/* GRASS */
+
+.grass{
+position:absolute;
+bottom:0;
+width:100%;
+height:200px;
+background:linear-gradient(#3CB043,#1f7a1f);
+overflow:hidden;
+}
+
+.grass::before{
+content:"";
+position:absolute;
+width:200%;
+height:200%;
+background:repeating-linear-gradient(
+90deg,
+rgba(0,0,0,0.05) 0px,
+rgba(0,0,0,0.05) 2px,
+transparent 2px,
+transparent 6px
+);
+animation:grassMove 6s linear infinite;
+}
+
+@keyframes grassMove{
+0%{transform:translateX(0);}
+100%{transform:translateX(-200px);}
+}
+
+/* SOLAR PANELS */
+
+.panel{
+position:absolute;
+bottom:160px;
+width:220px;
+height:130px;
+background:#0a2a44;
+border:6px solid #0ff;
+border-radius:6px;
+box-shadow:0 0 20px cyan inset;
+overflow:hidden;
+}
+
+.panel::before{
+content:"";
+position:absolute;
+width:100%;
+height:100%;
+background:
+linear-gradient(to right,rgba(255,255,255,.2) 1px,transparent 1px),
+linear-gradient(to bottom,rgba(255,255,255,.2) 1px,transparent 1px);
+background-size:30px 30px;
+}
+
+.panel::after{
+content:"";
+position:absolute;
+width:200%;
+height:100%;
+background:linear-gradient(
+120deg,
+transparent,
+rgba(255,255,255,.5),
+transparent
+);
+animation:reflect 4s infinite;
+}
+
+@keyframes reflect{
+0%{left:-200%;}
+100%{left:200%;}
+}
+
+.panel1{left:880px;}
+.panel2{left:1120px;}
+.panel3{left:1360px;}
+
+/* PLANTS */
+
+.plant{
+position:absolute;
+bottom:150px;
+font-size:70px;
+animation:wind 3s infinite alternate;
+}
+
+.plant1{left:120px;}
+.plant2{left:200px;}
+
+.plant3{right:200px;}
+.plant4{right:120px;}
+
+@keyframes wind{
+from{transform:rotate(-6deg);}
+to{transform:rotate(6deg);}
+}
+
+/* BUSHES */
+
+.bush{
+position:absolute;
+bottom:140px;
+font-size:100px;
+}
+
+.bush1{left:40px;}
+.bush2{left:280px;}
+
+.bush3{right:280px;}
+.bush4{right:40px;}
+
+/* FLOWERS */
+
+.flower{
+position:absolute;
+font-size:25px;
+}
+
+.f1{bottom:190px; left:60px;}
+.f2{bottom:200px; left:120px;}
+.f3{bottom:185px; left:300px;}
+
+.f4{bottom:200px; right:300px;}
+.f5{bottom:185px; right:120px;}
+.f6{bottom:195px; right:60px;}
+
+/* CENTER CONTENT */
+
+.overlay{
+background:rgba(0,0,0,0.4);
+padding:60px;
+border-radius:20px;
+text-align:center;
+color:white;
+z-index:5;
+}
+
+h1{
+font-size:55px;
+color:yellow;
+text-shadow:3px 3px 5px black;
+}
+
+p{
+font-size:22px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="sun">🌞</div>
+
+<div class="cloud cloudmove cloud1">☁️</div>
+<div class="cloud cloudmove cloud2">☁️</div>
+<div class="cloud cloud3">☁️</div>
+<div class="cloud cloud4">☁️</div>
+
+<div class="bird bird1"></div>
+<div class="bird bird2"></div>
+<div class="bird bird3"></div>
+
+<div class="turbine turbine1"></div>
+<div class="turbine turbine2"></div>
+
+
+<div class="panel panel1"></div>
+<div class="panel panel2"></div>
+<div class="panel panel3"></div>
+
+<div class="plant plant1">🌿</div>
+<div class="plant plant2">🌿</div>
+<div class="plant plant3">🌿</div>
+<div class="plant plant4">🌿</div>
+
+<div class="bush bush1">🌳</div>
+<div class="bush bush2">🌳</div>
+<div class="bush bush3">🌳</div>
+<div class="bush bush4">🌳</div>
+
+<div class="flower f1">🌸</div>
+<div class="flower f2">🌼</div>
+<div class="flower f3">🌺</div>
+<div class="flower f4">🌸</div>
+<div class="flower f5">🌼</div>
+<div class="flower f6">🌺</div>
+
+<div class="grass"></div>
+
+<div class="overlay">
+
+<h1 onclick="window.location.href='login.html'" style="cursor:pointer;">
+HELIO PREDICT
+</h1>
+<p>Solar Energy Prediction System</p>
+
+</div>
+
+</body>
+</html>
+

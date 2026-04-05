@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Helio Predict - Net Energy</title>
+
+<style>
+
+body{
+margin:0;
+height:100vh;
+font-family:"Comic Sans MS";
+
+background:linear-gradient(#87CEEB,#FFF7AE,#87CEEB);
+background-size:400% 400%;
+animation:sky 15s infinite alternate;
+
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+@keyframes sky{
+0%{background-position:0% 50%;}
+100%{background-position:100% 50%;}
+}
+
+.container{
+background:rgba(0,0,0,0.5);
+padding:50px;
+border-radius:20px;
+width:420px;
+color:white;
+text-align:center;
+}
+
+h1{
+color:yellow;
+margin-bottom:25px;
+}
+
+label{
+display:block;
+text-align:left;
+margin-top:15px;
+}
+
+input{
+width:100%;
+padding:10px;
+border-radius:6px;
+border:none;
+margin-top:5px;
+font-size:16px;
+}
+
+button{
+margin-top:25px;
+padding:12px;
+width:100%;
+background:#FFD700;
+border:none;
+border-radius:8px;
+font-size:18px;
+cursor:pointer;
+}
+
+button:hover{
+background:#ffcc00;
+}
+
+#result{
+margin-top:25px;
+font-size:22px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Net Energy Calculation</h1>
+
+<label>Solar Energy Generated (kWh)</label>
+<input type="number" id="generated" placeholder="Enter generated energy">
+
+<label>Energy Consumed (kWh)</label>
+<input type="number" id="consumed" placeholder="Enter consumed energy">
+
+<button onclick="calculateNet()">Calculate Net Energy</button>
+
+<h2 id="result"></h2>
+
+</div>
+
+<script>
+
+function calculateNet(){
+
+let generated=document.getElementById("generated").value;
+let consumed=document.getElementById("consumed").value;
+
+if(generated=="" || consumed==""){
+document.getElementById("result").innerHTML="Please enter all values";
+return;
+}
+
+let net = generated - consumed;
+
+if(net>0){
+document.getElementById("result").innerHTML=
+"Net Energy: "+net.toFixed(2)+" kWh (Surplus Energy)";
+}
+else if(net<0){
+document.getElementById("result").innerHTML=
+"Net Energy: "+net.toFixed(2)+" kWh (Energy Deficit)";
+}
+else{
+document.getElementById("result").innerHTML=
+"Net Energy: 0 kWh (Balanced)";
+}
+
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Helio Predict - Solar Input</title>
+
+<style>
+
+body{
+margin:0;
+height:100vh;
+font-family:"Comic Sans MS";
+
+background:linear-gradient(#87CEEB,#FFF7AE,#87CEEB);
+background-size:400% 400%;
+animation:sky 15s infinite alternate;
+
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+@keyframes sky{
+0%{background-position:0% 50%;}
+100%{background-position:100% 50%;}
+}
+
+.container{
+background:rgba(0,0,0,0.5);
+padding:50px;
+border-radius:20px;
+width:400px;
+color:white;
+text-align:center;
+}
+
+h1{
+color:yellow;
+margin-bottom:25px;
+}
+
+label{
+display:block;
+text-align:left;
+margin-top:15px;
+margin-bottom:5px;
+}
+
+input{
+width:100%;
+padding:10px;
+border-radius:6px;
+border:none;
+font-size:16px;
+}
+
+button{
+margin-top:25px;
+padding:12px;
+width:100%;
+background:#FFD700;
+border:none;
+border-radius:8px;
+font-size:18px;
+cursor:pointer;
+}
+
+button:hover{
+background:#ffcc00;
+}
+
+#result{
+margin-top:20px;
+font-size:20px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Solar Power Prediction</h1>
+
+<label>Solar Radiation (W/m²)</label>
+<input type="number" id="radiation" placeholder="Enter Solar Radiation">
+
+<label>Temperature (°C)</label>
+<input type="number" id="temperature" placeholder="Enter Temperature">
+
+<label>Humidity (%)</label>
+<input type="number" id="humidity" placeholder="Enter Humidity">
+
+<label>Cloud Cover (%)</label>
+<input type="number" id="cloud" placeholder="Enter Cloud Cover">
+
+<button onclick="predictPower()">Predict Power</button>
+
+<button onclick="window.location.href='consumption.html'">Next</button>
+
+<h2 id="result"></h2>
+
+</div>
+
+<script>
+
+function predictPower(){
+
+let radiation=document.getElementById("radiation").value;
+let temperature=document.getElementById("temperature").value;
+let humidity=document.getElementById("humidity").value;
+let cloud=document.getElementById("cloud").value;
+
+if(radiation=="" || temperature=="" || humidity=="" || cloud==""){
+document.getElementById("result").innerHTML="Please enter all values";
+return;
+}
+
+let power=(radiation*0.005)+(temperature*0.08)-(humidity*0.02)-(cloud*0.03);
+
+document.getElementById("result").innerHTML=
+"Predicted Solar Power: "+power.toFixed(2)+" kWh";
+
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Helio Predict</title>
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial;
+      background: #FFF7AE;
+    }
+
+    .container {
+      text-align: center;
+    }
+
+    .box {
+      background: white;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      width: 350px;
+    }
+
+    h1 {
+      color: #FF9800;
+      margin-bottom: 25px;
+    }
+
+    button {
+      padding: 12px 25px;
+      margin: 10px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .loginbtn {
+      background: #4CAF50;
+      color: white;
+    }
+
+    .signupbtn {
+      background: #FF9800;
+      color: white;
+    }
+
+    input {
+      width: 90%;
+      padding: 10px;
+      margin: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    .form {
+      display: none;
+    }
+  </style>
+
+  <script>
+
+    function showLogin() {
+      document.getElementById("loginForm").style.display = "block";
+      document.getElementById("signupForm").style.display = "none";
+    }
+
+    function showSignup() {
+      document.getElementById("signupForm").style.display = "block";
+      document.getElementById("loginForm").style.display = "none";
+    }
+
+  </script>
+
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div class="box">
+
+      <h1>HELIO PREDICT</h1>
+
+      <button class="loginbtn" onclick="showLogin()">Login</button>
+      <button class="signupbtn" onclick="showSignup()">Sign Up</button>
+
+      <div id="loginForm" class="form">
+        <h2>Login</h2>
+        <input type="text" id="loginUsername" placeholder="Username">
+        <input type="password" id="loginPassword" placeholder="Password">
+        <button class="loginbtn" onclick="handleLogin()">Login</button>
+        <p id="loginStatus" style="color: red;"></p>
+      </div>
+
+      <div id="signupForm" class="form">
+        <h2>Sign Up</h2>
+        <input type="text" id="signupUsername" placeholder="Create Username">
+        <input type="email" id="signupEmail" placeholder="Email ID (Gmail Only)">
+        <input type="password" id="signupPassword" placeholder="Create Password">
+        <input type="password" id="signupConfirmPassword" placeholder="Confirm Password">
+        <button class="signupbtn" onclick="handleSignup()">Create Account</button>
+        <p id="signupStatus" style="color: red;"></p>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    const API_URL = 'http://localhost:3000/api';
+
+    async function handleSignup() {
+      const username = document.getElementById('signupUsername').value;
+      const email = document.getElementById('signupEmail').value;
+      const password = document.getElementById('signupPassword').value;
+      const confirmPassword = document.getElementById('signupConfirmPassword').value;
+      const status = document.getElementById('signupStatus');
+
+      if (!username || !email || !password || !confirmPassword) {
+        status.innerText = "All fields are required.";
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        status.innerText = "Passwords do not match.";
+        return;
+      }
+
+      // Gmail constraint check (also enforced on backend)
+      if (!email.toLowerCase().endsWith('@gmail.com')) {
+        status.innerText = "Only @gmail.com addresses are allowed.";
+        return;
+      }
+
+      try {
+        const response = await fetch(`${API_URL}/signup`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, email, password })
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+          status.style.color = "green";
+          status.innerText = "Account created! You can now login.";
+          setTimeout(() => showLogin(), 2000);
+        } else {
+          status.innerText = data.error || "Signup failed.";
+        }
+      } catch (err) {
+        status.innerText = "Server error. Is the backend running?";
+      }
+    }
+
+    async function handleLogin() {
+      const username = document.getElementById('loginUsername').value;
+      const password = document.getElementById('loginPassword').value;
+      const status = document.getElementById('loginStatus');
+
+      if (!username || !password) {
+        status.innerText = "Username and password are required.";
+        return;
+      }
+
+      try {
+        const response = await fetch(`${API_URL}/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+          status.style.color = "green";
+          status.innerText = "Login successful!";
+          // Storing basic user info (simplified for this demo)
+          localStorage.setItem('user', JSON.stringify(data.user));
+          window.location.href = 'prediction.html';
+        } else {
+          status.innerText = data.error || "Login failed.";
+        }
+      } catch (err) {
+        status.innerText = "Server error. Is the backend running?";
+      }
+    }
+  </script>
+
+</body>
+
+</html>

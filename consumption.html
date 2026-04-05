@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Helio Predict - Energy Consumption</title>
+
+<style>
+
+body{
+margin:0;
+height:100vh;
+font-family:"Comic Sans MS";
+
+background:linear-gradient(#87CEEB,#FFF7AE,#87CEEB);
+background-size:400% 400%;
+animation:sky 15s infinite alternate;
+
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+@keyframes sky{
+0%{background-position:0% 50%;}
+100%{background-position:100% 50%;}
+}
+
+.container{
+background:rgba(0,0,0,0.5);
+padding:50px;
+border-radius:20px;
+width:420px;
+color:white;
+text-align:center;
+box-shadow:0 0 20px rgba(0,0,0,0.4);
+}
+
+h1{
+color:yellow;
+margin-bottom:25px;
+text-shadow:2px 2px 4px black;
+}
+
+label{
+display:block;
+text-align:left;
+margin-top:15px;
+font-size:18px;
+}
+
+input{
+width:100%;
+padding:10px;
+border-radius:6px;
+border:none;
+margin-top:5px;
+font-size:16px;
+}
+
+button{
+margin-top:25px;
+padding:12px;
+width:100%;
+background:#FFD700;
+border:none;
+border-radius:8px;
+font-size:18px;
+cursor:pointer;
+}
+
+button:hover{
+background:#ffcc00;
+}
+
+#result{
+margin-top:25px;
+font-size:22px;
+color:white;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Solar Energy Consumption</h1>
+
+<label>Appliance Power (Watts)</label>
+<input type="number" id="power" placeholder="Enter power of device">
+
+<label>Number of Appliances</label>
+<input type="number" id="appliances" placeholder="Enter number of appliances">
+
+<label>Usage Time (Hours)</label>
+<input type="number" id="time" placeholder="Enter usage time per day">
+
+<label>Number of Days</label>
+<input type="number" id="days" placeholder="Enter number of days">
+
+<button onclick="calculateEnergy()">Calculate Consumption</button>
+
+<button onclick="window.location.href='netenergy.html'">Next</button>
+
+<h2 id="result"></h2>
+
+</div>
+
+<script>
+
+function calculateEnergy(){
+
+let power=document.getElementById("power").value;
+let appliances=document.getElementById("appliances").value;
+let time=document.getElementById("time").value;
+let days=document.getElementById("days").value;
+
+if(power=="" || appliances=="" || time=="" || days==""){
+document.getElementById("result").innerHTML="Please enter all values";
+return;
+}
+
+let energy=(power*appliances*time*days)/1000;
+
+document.getElementById("result").innerHTML=
+"Total Energy Consumption: "+energy.toFixed(2)+" kWh";
+
+}
+
+</script>
+
+</body>
+</html>
